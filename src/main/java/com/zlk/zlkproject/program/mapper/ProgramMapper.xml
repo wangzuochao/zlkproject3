@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zlk.zlkproject.program.mapper.ProgramMapper">
+    <resultMap id="programEntityMap" type="com.zlk.zlkproject.program.entity.Program">
+        <id property="programId" column="program_id" javaType="java.lang.Integer"></id>
+        <result property="programName" column="program_name" javaType="java.lang.String"></result>
+    </resultMap>
+
+    <select id="selectAllProgram" resultMap="programEntityMap">
+           SELECT
+          `program_id`,
+          `program_name`
+        FROM
+          `zlk_project`.`program`
+   </select>
+</mapper>

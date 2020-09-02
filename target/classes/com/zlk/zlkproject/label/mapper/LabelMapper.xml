@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+        <!DOCTYPE mapper
+                PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+                "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zlk.zlkproject.label.mapper.LabelMapper">
+<resultMap id="labelEntityMap" type="com.zlk.zlkproject.label.entity.Label">
+    <id property="labelId" column="label_id" javaType="java.lang.Integer"></id>
+    <result property="labelName" column="label_name" javaType="java.lang.String"></result>
+</resultMap>
+
+<select id="selectAllLabel" resultMap="labelEntityMap">
+    SELECT
+  `label_id`,
+  `label_name`
+FROM
+  `zlk_project`.`label`
+</select>
+</mapper>
