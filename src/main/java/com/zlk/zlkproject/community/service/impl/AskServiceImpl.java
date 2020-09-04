@@ -17,6 +17,7 @@ public class AskServiceImpl implements AskService {
     @Resource
     private AskMapper askMapper;
 
+    //调用mapper分页查询提问信息
     @Override
     public List<Ask> findAskList(Integer page,Integer limit) {
         Map<String,Object> paraMap = new HashMap<String, Object>();
@@ -26,13 +27,16 @@ public class AskServiceImpl implements AskService {
         return askMapper.findAskList(paraMap);
     }
 
+    //调用mapper层查询提问的总数
     @Override
     public Integer findAskCount() {
         return askMapper.findAskCount();
     }
 
+    //按回答数查询提问
     @Override
-    public List<Ask> findAskList1() {
-        return askMapper.findAskList1();
+    public List<Ask> findAskByAskReportNum() {
+        return askMapper.findAskByAskReportNum();
     }
+
 }

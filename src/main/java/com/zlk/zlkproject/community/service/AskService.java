@@ -12,5 +12,8 @@ public interface AskService {
     //调用mapper层查询提问的总数
     Integer findAskCount();
 
-    List<Ask> findAskList1();
+    //按回答数查询提问
+    List<Ask> findAskByAskReportNum();
+
+
 }
