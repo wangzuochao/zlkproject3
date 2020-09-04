@@ -35,4 +35,8 @@ public class CommunityController {
     public String ask() {
         return "ask";
     }
+    @RequestMapping(value = "/article")
+    public String article() {
+        return "article";
+    }
 }
