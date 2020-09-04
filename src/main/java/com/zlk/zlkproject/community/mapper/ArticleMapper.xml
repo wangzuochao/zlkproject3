@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zlk.zlkproject.community.mapper.ArticleMapper">
+    <resultMap id="ArticleResultMap" type="com.zlk.zlkproject.community.entity.Article" >
+        <id column="article_id" property="articleId" jdbcType="INTEGER" />
+        <result column="user_id" property="userId" jdbcType="INTEGER" />
+        <result column="program_id" property="programId" jdbcType="INTEGER" />
+        <result column="article_title" property="articleTitle" jdbcType="VARCHAR" />
+        <result column="article_content_markdown" property="articleContentMarkdown" jdbcType="LONGVARCHAR" />
+        <result column="article_content_html" property="articleContentHtml" jdbcType="LONGVARCHAR" />
+        <result column="article_date" property="articleDate" jdbcType="TIMESTAMP" />
+        <result column="like_num" property="likeNum" jdbcType="INTEGER" />
+        <result column="stamp_num" property="stampNum" jdbcType="INTEGER" />
+        <result column="article_report_num" property="articleReportNum" jdbcType="INTEGER" />
+        <result column="article_image" property="articleImage" jdbcType="VARCHAR" />
+        <result column="pageviews" property="pageviews" jdbcType="INTEGER" />
+        <result column="top_status" property="topStatus" jdbcType="INTEGER" />
+        <association property="articleProgram" javaType="com.zlk.zlkproject.community.entity.ArticleProgram">
+            <id column="program_id" property="programId" jdbcType="VARCHAR" />
+            <result column="program_name" property="programName" jdbcType="VARCHAR" />
+        </association>
+    </resultMap>
+    <!--流加载全部文章-->
+    <select id="findAllLayui" resultMap="ArticleResultMap">
+        SELECT
+        article.*,article_program.*
+        FROM
+        article,article_program
+        where
+        article.program_id = article_program.program_id
+        ORDER BY `article`.`top_status` DESC, `article`.`pageviews` DESC
+        limit #{pageIndex},#{pageSize}
+    </select>
+    <!--查询文章标签-->
+    <!--
+    <select id="findLabel" resultMap="ArticleResultMap">
+        SELECT
+        article_ref_label.*,label.*
+        FROM
+        article,article_ref_label,label
+        where
+        article.article_id = article_ref_label.article_id and article_ref_label.label_id = label.label_id and article.article_id = #{articleId}
+    </select>
+    -->
+    <!--获取文章总数-->
+    <select id="countArticle" resultType="Integer">
+        SELECT COUNT(*) FROM article
+    </select>
+</mapper>
