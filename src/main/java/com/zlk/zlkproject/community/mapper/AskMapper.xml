@@ -12,13 +12,17 @@
     </resultMap>
     
     <select id="findAskList" parameterType="java.util.Map" resultMap="askEntityMap">
-        select * from `asktest` order by `asktest_id` limit #{startIndex},#{pageSize}
+        SELECT
+  `asktest_id`,
+  `asktest_content`,
+  `asktest_reply_sum`,
+  `asktest_time`
+FROM
+  `community`.`asktest`
+        order by `asktest_id` limit #{startIndex},#{pageSize}
     </select>
     <select id="findAskCount" resultType="java.lang.Integer">
         select count(*) from `asktest`
     </select>
-    <select id="findAskList1" resultMap="askEntityMap">
-        select * from `asktest`
-    </select>
-    
+
 </mapper>

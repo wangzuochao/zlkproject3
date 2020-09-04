@@ -31,8 +31,4 @@ public class AskServiceImpl implements AskService {
         return askMapper.findAskCount();
     }
 
-    @Override
-    public List<Ask> findAskList1() {
-        return askMapper.findAskList1();
-    }
 }

@@ -16,5 +16,4 @@ public interface AskMapper {
     //查询提问的总数
     Integer findAskCount();
 
-    List<Ask> findAskList1();
 }
