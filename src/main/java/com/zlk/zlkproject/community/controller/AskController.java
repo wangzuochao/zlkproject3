@@ -48,4 +48,3 @@ public class AskController {
 
 
 }
-1

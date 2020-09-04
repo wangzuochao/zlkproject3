@@ -19,4 +19,3 @@ public interface AskMapper {
     //按回答数查询提问
     List<Ask> findAskByAskReportNum();
 }
-1
