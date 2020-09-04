@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zlk.zlkproject.user.mapper.UserMapper">
+    <resultMap id="UserEntityMap" type="com.zlk.zlkproject.user.entity.User" >
+        <id column="id" property="userId" jdbcType="INTEGER" />
+        <result column="username" property="userName" jdbcType="VARCHAR" />
+    </resultMap>
+    <select id="findUserBy" resultMap="UserEntityMap">
+        select user.*
+        from user
+        where user.id = #{userId}
+    </select>
+
+</mapper>
