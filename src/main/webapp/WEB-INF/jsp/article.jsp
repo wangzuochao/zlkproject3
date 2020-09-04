@@ -76,7 +76,7 @@
 
 <body>
 
-<div class="layui-container" id="ask">
+<div class="layui-container" id="article">
 </div>
 <script>
 
@@ -88,9 +88,9 @@
         var flow = layui.flow;
 
         flow.load({
-            elem: '#ask',
+            elem: '#article',
             /*scrollElem: '#ask',*/
-            isAuto: false,
+            isAuto: true,
             isLazyimg: true,
             //end: '<p style="color:red">没有更多了</p>',   //加载所有后显示文本，默认'没有更多了'
             done: function (page, next) {
@@ -145,6 +145,10 @@
                                 for (var i = 0; i <item.articleRefLabels.length ; i++) {
                                     span += "<span class='layui-badge layui-bg-gray' style='border-radius: 20px'>"+item.articleRefLabels[i].articleLabel.labelName+"</span>";
                                 }
+                                var zhiding = "";
+                                if(item.topStatus==1){
+                                    zhiding += '<span class="layui-badge layui-bg-orange" style="margin-left: 185px">置顶</span>'
+                                }
 
 
                                 var tmpHtml = " ";
@@ -155,12 +159,13 @@
                                 tmpHtml += "<div class='layui-col-xs10'>";
                                 tmpHtml += "<div class='layui-row' style='width: 100%;height: 100%;margin-top: 10px' id='label'>";
                                 tmpHtml += span;
+                                tmpHtml += zhiding;
                                 //tmpHtml += "<span class='layui-badge layui-bg-gray' style='border-radius: 20px'>"+item.articleRefLabels[0].articleLabel.labelName+"</span>";
                                 //tmpHtml += "<span class='layui-badge layui-bg-gray' style='border-radius: 20px'>"+item.articleRefLabels[1].articleLabel.labelName+"</span>";
                                // tmpHtml += "<span class='layui-badge layui-bg-gray' style='border-radius: 20px'>"+item.articleRefLabels[2].articleLabel.labelName+"</span>";
                                 tmpHtml += "</div>";
                                 tmpHtml += "<div class='layui-row' style='width: 100%;height: 100%;margin-top: 10px;'><strong>";
-                                tmpHtml += "<a href='/article/"+item.articleId+"' >"+item.articleTitle+ "</a>";
+                                tmpHtml += "<a href='/article/"+item.articleId+"' target='_top'>"+item.articleTitle+ "</a>";
                                 tmpHtml += "</strong>";
                                 tmpHtml += "</div>";
                                 tmpHtml += "<div class='layui-row' style='margin-top: 17px;font-size: 10px'><strong>";

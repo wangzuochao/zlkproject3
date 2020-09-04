@@ -29,4 +29,13 @@ public interface ArticleService {
      * @return 数量
      */
     Integer countArticle();
+    /**
+     * 文章详情页面显示
+     *
+     * @param id     文章ID
+     * @return 文章
+     */
+    Article getArticleById(Integer id);
+
+
 }

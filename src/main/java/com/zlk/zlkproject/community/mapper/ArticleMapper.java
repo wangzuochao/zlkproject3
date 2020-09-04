@@ -40,4 +40,11 @@ public interface ArticleMapper {
      * @return 数量
      */
     Integer countArticle();
+    /**
+     * 根据id查询带用户的文章信息
+     *
+     * @param articleId 文章ID
+     * @return 文章
+     */
+    Article getArticleById( @Param(value = "articleId") Integer articleId);
 }

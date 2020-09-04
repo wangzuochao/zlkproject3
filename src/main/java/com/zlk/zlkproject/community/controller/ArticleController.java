@@ -3,13 +3,17 @@ package com.zlk.zlkproject.community.controller;
 import com.github.pagehelper.PageInfo;
 import com.zlk.zlkproject.community.entity.Article;
 import com.zlk.zlkproject.community.service.ArticleService;
+import com.zlk.zlkproject.user.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -31,6 +35,30 @@ public class ArticleController {
         map.put("data",articleList);
         map.put("pages",pages);
         return map;
+    }
+
+    /**
+     * 文章详情页显示
+     *
+     * @param articleId 文章ID
+     * @return modelAndView
+     */
+    @RequestMapping(value = "/article/{articleId}")
+    public String getArticleDetailPage(@PathVariable("articleId") Integer articleId, Model model) {
+
+        //文章信息，分类，标签，作者，评论
+        Article article = articleService.getArticleById(articleId);
+
+
+        //文章信息
+        model.addAttribute("article", article);
+
+        //评论列表
+        //List<Comment> commentList = commentService.listCommentByArticleId(articleId);
+        //model.addAttribute("commentList", commentList);
+
+
+        return "articleDetail";
     }
 
 }
