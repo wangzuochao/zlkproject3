@@ -5,20 +5,27 @@
 
 <mapper namespace="com.zlk.zlkproject.community.mapper.AskMapper">
     <resultMap id="askEntityMap" type="com.zlk.zlkproject.community.entity.Ask" >
-        <id column="asktest_id" property="askId" jdbcType="INTEGER" />
-        <result column="asktest_reply_sum" property="askReplySum" jdbcType="INTEGER" />
-        <result column="asktest_time" property="askTime" jdbcType="VARCHAR" />
-        <result column="asktest_content" property="askContent" jdbcType="VARCHAR" />
+        <id column="ask_id" jdbcType="INTEGER" property="askId" />
+        <result column="user_id" jdbcType="INTEGER" property="userId" />
+        <result column="ask_content" jdbcType="VARCHAR" property="askContent" />
+        <result column="ask_date" jdbcType="TIMESTAMP" property="askDate" />
+        <result column="ask_report_num" jdbcType="INTEGER" property="askReportNum" />
     </resultMap>
     
+    <!--分页查询提问信息-->
     <select id="findAskList" parameterType="java.util.Map" resultMap="askEntityMap">
-        select * from `asktest` order by `asktest_id` limit #{startIndex},#{pageSize}
+        select * from `ask` order by `ask_id` limit #{startIndex},#{pageSize}
     </select>
+    <!--查询提问的总数-->
     <select id="findAskCount" resultType="java.lang.Integer">
-        select count(*) from `asktest`
+        select count(*) from `ask`
     </select>
-    <select id="findAskList1" resultMap="askEntityMap">
-        select * from `asktest`
+    <!--按回答数查询提问-->
+    <select id="findAskByAskReportNum" parameterType="java.util.Map" resultMap="askEntityMap">
+        select * from `ask` order by ask_report_num desc
     </select>
+    
+    
+  
     
 </mapper>

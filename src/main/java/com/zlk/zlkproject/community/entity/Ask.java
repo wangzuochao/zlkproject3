@@ -4,19 +4,33 @@ import java.util.Date;
 
 public class Ask {
 
+    //提问id
     private Integer askId;
-    private Integer askReplySum;
-    private String askTime;
+    //关联用户id
+    private Integer userId;
+    //提问内容
     private String askContent;
+    //提问时间
+    private Date askDate;
+    //举报数量
+    private Integer askReportNum;
 
     public Ask() {
     }
 
-    public Ask(Integer askId, Integer askReplySum, String askTime, String askContent) {
+    public Ask(Integer askId, String askContent, Date askDate, Integer askReportNum) {
         this.askId = askId;
-        this.askReplySum = askReplySum;
-        this.askTime = askTime;
         this.askContent = askContent;
+        this.askDate = askDate;
+        this.askReportNum = askReportNum;
+    }
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
     public Integer getAskId() {
@@ -27,22 +41,6 @@ public class Ask {
         this.askId = askId;
     }
 
-    public Integer getAskReplySum() {
-        return askReplySum;
-    }
-
-    public void setAskReplySum(Integer askReplySum) {
-        this.askReplySum = askReplySum;
-    }
-
-    public String getAskTime() {
-        return askTime;
-    }
-
-    public void setAskTime(String askTime) {
-        this.askTime = askTime;
-    }
-
     public String getAskContent() {
         return askContent;
     }
@@ -51,14 +49,30 @@ public class Ask {
         this.askContent = askContent;
     }
 
+    public Date getAskDate() {
+        return askDate;
+    }
+
+    public void setAskDate(Date askDate) {
+        this.askDate = askDate;
+    }
+
+    public Integer getAskReportNum() {
+        return askReportNum;
+    }
+
+    public void setAskReportNum(Integer askReportNum) {
+        this.askReportNum = askReportNum;
+    }
+
     @Override
     public String toString() {
         return "Ask{" +
                 "askId=" + askId +
-                ", askReplySum=" + askReplySum +
-                ", askTime=" + askTime +
                 ", askContent='" + askContent + '\'' +
+                ", askDate=" + askDate +
+                ", askReportNum=" + askReportNum +
                 '}';
     }
-
 }
+1

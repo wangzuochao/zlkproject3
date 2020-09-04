@@ -23,14 +23,17 @@ public class CommunityController {
     public String login() {
         return "login";
     }
+
     @RequestMapping(value = "/logon")
     public String logon() {
         return "logon";
     }
+
     @RequestMapping(value = "/content")
     public String content() {
         return "content";
     }
+
     @RequestMapping(value = "/ask")
     public String ask() {
         return "ask";
