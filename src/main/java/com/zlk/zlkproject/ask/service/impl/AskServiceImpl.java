@@ -34,7 +34,6 @@ public class AskServiceImpl implements AskService {
             //封装labelList
             List<AskRefLabel> labelList = askRefLabelMapper.findLabel(askList.get(i).getAskId());
             askList.get(i).setAskRefLabels(labelList);
-            System.out.println(askList.get(i).toString()+"     ");
         }
         return new PageInfo<>(askList);
     }

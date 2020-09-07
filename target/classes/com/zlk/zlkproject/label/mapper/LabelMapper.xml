@@ -9,10 +9,10 @@
 </resultMap>
 
 <select id="selectAllLabel" resultMap="labelEntityMap">
-    SELECT
+ SELECT
   `label_id`,
   `label_name`
 FROM
-  `zlk_project`.`label`
+  `zlkproject`.`label`
 </select>
 </mapper>

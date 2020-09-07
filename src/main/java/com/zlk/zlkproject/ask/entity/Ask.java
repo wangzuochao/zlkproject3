@@ -32,6 +32,18 @@ public class Ask {
 
     private Integer replyCount;
 
+    private String askImg;
+
+    private List<AskRefLabel> askRefLabels;
+
+    public String getAskImg() {
+        return askImg;
+    }
+
+    public void setAskImg(String askImg) {
+        this.askImg = askImg;
+    }
+
     public String getReplyPerson() {
         return replyPerson;
     }
@@ -64,7 +76,7 @@ public class Ask {
         this.replyCount = replyCount;
     }
 
-    private List<AskRefLabel> askRefLabels;
+
 
     public List<AskRefLabel> getAskRefLabels() {
         return askRefLabels;

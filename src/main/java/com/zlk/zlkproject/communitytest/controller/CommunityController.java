@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class CommunityController {
 
-    @RequestMapping(value = "/test")
-    public String test() {
+    @RequestMapping(value = "/community")
+    public String community() {
         return "community";
     }
 
@@ -25,6 +25,11 @@ public class CommunityController {
     @RequestMapping(value = "/article")
     public String article() {
         return "article";
+    }
+
+    @RequestMapping(value = "/myReply")
+    public String myReply() {
+        return "myreply";
     }
 
 }

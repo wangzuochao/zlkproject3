@@ -87,8 +87,8 @@
                                 <ul class="layui-tab-title ">
                                     <li class="layui-this "><a href="<%=basePath%>/ask" target="pageTarget">全部</a>
                                     </li>
-                                    <li><a href="" target="pageTarget">我的提问</a></li>
-                                    <li><a href="" target="pageTarget">我的回答</a></li>
+                                    <li><a id = "myask" href="" target="pageTarget">我的提问</a></li>
+                                    <li><a href="<%=basePath%>/myReply" target="pageTarget">我的回答</a></li>
                                 </ul>
                                 <%--                                <div class="layui-tab-content"></div>--%>
                             </div>
@@ -120,12 +120,12 @@
                                 <ul class="layui-tab-title ">
                                     <li class="layui-this "><a href="" target="pageTarget2">全部</a>
                                     </li>
-                                    <li><a href="" target="pageTarget2">我的文章</a></li>
+                                    <li><a id = "mytitle" href="" target="pageTarget2">我的文章</a></li>
                                 </ul>
                                 <%--                                <div class="layui-tab-content"></div>--%>
                             </div>
 
-                            <iframe src="<%=basePath%>/article" name="pageTarget2"
+                            <iframe  id="no" src="<%=basePath%>/article" name="pageTarget2"
                                     style="width: 100%;height: 100%;border: 0 none;vertical-align: middle;"
                                     frameborder="1">
                             </iframe>
@@ -133,10 +133,12 @@
                         <div class="layui-col-md3 contentHight" style="border:0px solid #F00;text-align: center;">
                             <h3>热门文章</h3>
                             <hr class="layui-bg-blue">
-                            <iframe src="" name="pageTarget3"
-                                    style="width: 100%;height: 100%;border: 0 none;vertical-align: middle;"
-                                    frameborder="1">
-                            </iframe>
+<%--                            <iframe src="" name="pageTarget3"--%>
+<%--                                    style="width: 100%;height: 100%;border: 0 none;vertical-align: middle;"--%>
+<%--                                    frameborder="1">--%>
+<%--                            </iframe>--%>
+                            <div id="hotArticle">
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -224,10 +226,16 @@
 
         $("#ask").click(function (e) {
             $("#label > dd").find("a").removeClass("rcorners1");
+            changeColorArray.length=0;
         });
+
+        $("#myask").click(function () {
+            alert("登录状态");
+        })
 
         $("#title").click(function (e) {
             $("#program > dd").find("a").removeClass("resource");
+            changeColorArray.length=0;
         });
 
         $("#cancel").click(function () {
@@ -362,9 +370,9 @@
                     }
                     $("#all > ul> li >a").click(function () {
                         $("#label > dd").find("a").removeClass("rcorners1");
+                        changeColorArray.length=0;
                     });
                     var labelId = $(e.currentTarget).attr("labelId");
-                    //alert(labelId);
                     var labelIdList = [];
                     for(var i = 0 ; i < changeColorArray.length; i++){
                         labelIdList.push(changeColorArray[i].attr("labelId"));
@@ -411,15 +419,17 @@
                         $(e.currentTarget).addClass("resource");
                         changeColorArray.push($(e.currentTarget));
                     }
-                    if (changeColorArray.length > 2) {
+                    if (changeColorArray.length > 1) {
                         changeColorArray[0].removeClass("resource");
                         changeColorArray.splice(0, 1);
                     }
                     $("#full > ul> li >a").click(function () {
                         $("#program > dd").find("a").removeClass("resource");
+                        changeColorArray.length = 0;
                     });
                     var programId = $(e.currentTarget).attr("programId");
-                    // alert(programId);
+                    alert(programId);
+                    $("#no").css("display", "none");
 
                 });
             },
@@ -435,9 +445,45 @@
             for (var i = 0; i < result.length; i++) {
                 html += "<dd>";
                 html += "<h3>";
-                html += "<a programId=\"" + result[i].programId + "\" style=\"height: 100px; line-height: 40px\">";
+                html += "<a programId=\"" + result[i].programId + "\" href=\" /hotArticle/ "+ result[i].programId + " \" target=\"pageTarget2\" style=\"height: 100px; line-height: 40px\">";
                 html += result[i].programName;
                 html += "</a>";
+                html += "</h3>";
+                html += "</dd>";
+            }
+            html += "";
+            return html;
+        }
+        $.ajax({
+            url: '<%=basePath%>/hotArticle',
+            type: 'GET',
+            contentType: "application/json",
+            dataType: 'json',
+            data: {},
+            async: false,
+            success: function (data) {
+                var html = hotArticleHtml(data);
+                $("#hotArticle").html(html);
+
+            },
+            error: function (xhr, status, error) {
+                debugger;
+                console.log("发生错误");
+            }
+        });
+        function hotArticleHtml(result) {
+            var result = result;
+            var html = "";
+            for (var i = 0; i < result.length; i++) {
+                html += "<dd>";
+                html += "<table>";
+                html += "<tr>";
+                html += "<th>";
+                html += result[i].articleImage;
+                html += "</th>";
+                html += "<th>";
+                html += result[i].articleTitle;
+                html += "</th>";
                 html += "</h3>";
                 html += "</dd>";
             }
