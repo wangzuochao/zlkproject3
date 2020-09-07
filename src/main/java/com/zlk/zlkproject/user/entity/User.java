@@ -18,5 +18,5 @@ public class User {
     /**用户名称*/
     private String userName;
     /**用户头像*/
-    private String userImage;
+    private String imgUrl;
 }

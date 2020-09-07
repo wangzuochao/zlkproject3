@@ -110,37 +110,6 @@
                                 console.log(item);
                                 //console.log(data.list);
                                 //console.log(list);
-                                /*
-                                var str = " <div><article class='post type-post'>" +
-                                    "<figure class='thumbnail'>"+
-                                    "<a href='/article/"+item.articleId+"'>"+
-                                    "<img src='/img/thumbnail/random/img_"+item.articleId%15+".jpg' class='attachment-content size-content wp-post-image' alt='"+item.articleTitle+"'></a>"+
-                                    "<span class='cat'>"+
-                                    "<a href='/category/"+item.categoryList[item.categoryList.length-1].categoryId+"'>"+ item.categoryList[item.categoryList.length-1].categoryName+
-                                    "</a>"+
-                                    "</span>"+
-                                    "</figure>"+
-                                    "<header class='entry-header'>"+
-                                    "<h2 class='entry-title'>"+
-                                    "<a href='/article/"+item.articleId+"' rel='bookmark'>"+item.articleTitle+
-                                    "</a>"+
-                                    "</h2>"+
-                                    "</header>"+
-                                    "<div class='entry-content'>"+
-                                    "<div class='archive-content'>"+item.articleSummary+"...</div>"+
-                                    "<span class='title-l'></span>"+
-                                    "<span class='entry-meta'>"+
-                                    "<span class='date'>"+ item.stringArticleCreateTime+ "</span>"
-                                "<span class='views'>"+
-                                "<i class='fa fa-eye'></i>"+ item.articleViewCount+"views</span>"+
-                                "</span>"+
-                                "<div class='clear'></div>"+
-                                "</div>"+
-                                "<span class='entry-more'>"+
-                                "<a href='/article/"+item.articleId+"' rel='bookmark'> 阅读全文 </a>"
-                                "</span>"+
-                                "</article></div>"
-                                */
                                 var span = "";
                                 for (var i = 0; i <item.articleRefLabels.length ; i++) {
                                     span += "<span class='layui-badge layui-bg-gray' style='border-radius: 20px'>"+item.articleRefLabels[i].articleLabel.labelName+"</span>";

@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,6 +26,35 @@ import java.util.Map;
 public class ArticleController {
     @Autowired
     private ArticleService articleService;
+    /**
+     *
+     * //判断用户是否登录
+     * @description: * @param null
+     * @return:
+     * @author: zhc
+     * @time: 2020/9/7 10:44
+     */
+    @RequestMapping("/isLoginOrNo")
+    public String isLogin(HttpServletRequest request){
+
+        //获取登录信息     request.getSession().setAttribute("loginUser", user);
+        User user=(User)request.getSession().getAttribute("loginUser");
+        if(user==null){
+           return"articleDetail";
+        }else{
+
+            //若已登录，跳转
+            return "article";
+        }
+    }
+    /**
+     *
+     * 流加载查询全部文章列表
+     * @description: * @param null
+     * @return:
+     * @author: zhc
+     * @time: 2020/9/7 8:39
+     */
     @RequestMapping("/flow")
     @ResponseBody
     public Map<String,Object> flow(Integer page, Integer limit)throws Exception{
@@ -38,7 +69,7 @@ public class ArticleController {
     }
 
     /**
-     * 文章详情页显示
+     * 一篇文章详情页显示
      *
      * @param articleId 文章ID
      * @return modelAndView

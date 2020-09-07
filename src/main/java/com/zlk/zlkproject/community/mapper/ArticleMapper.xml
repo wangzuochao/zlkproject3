@@ -25,6 +25,7 @@
         <association property="user" javaType="com.zlk.zlkproject.user.entity.User">
             <id column="id" property="userId" jdbcType="INTEGER" />
             <result column="username" property="userName" jdbcType="VARCHAR" />
+            <result column="img_url" property="imgUrl" jdbcType="VARCHAR" />
         </association>
     </resultMap>
     <!--流加载全部文章-->
