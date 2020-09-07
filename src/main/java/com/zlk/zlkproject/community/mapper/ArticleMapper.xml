@@ -22,6 +22,10 @@
             <id column="program_id" property="programId" jdbcType="VARCHAR" />
             <result column="program_name" property="programName" jdbcType="VARCHAR" />
         </association>
+        <association property="user" javaType="com.zlk.zlkproject.user.entity.User">
+            <id column="id" property="userId" jdbcType="INTEGER" />
+            <result column="username" property="userName" jdbcType="VARCHAR" />
+        </association>
     </resultMap>
     <!--流加载全部文章-->
     <select id="findAllLayui" resultMap="ArticleResultMap">
@@ -34,19 +38,17 @@
         ORDER BY `article`.`top_status` DESC, `article`.`pageviews` DESC
         limit #{pageIndex},#{pageSize}
     </select>
-    <!--查询文章标签-->
-    <!--
-    <select id="findLabel" resultMap="ArticleResultMap">
-        SELECT
-        article_ref_label.*,label.*
-        FROM
-        article,article_ref_label,label
-        where
-        article.article_id = article_ref_label.article_id and article_ref_label.label_id = label.label_id and article.article_id = #{articleId}
-    </select>
-    -->
     <!--获取文章总数-->
     <select id="countArticle" resultType="Integer">
         SELECT COUNT(*) FROM article
+    </select>
+    <!--查询单篇文章的内容 包含用户信息和栏目信息-->
+    <select id="getArticleById" resultMap="ArticleResultMap">
+        SELECT
+        article.*,article_program.*,user.*
+        FROM
+        article,article_program,user
+        where
+        article_id = #{articleId} and article.program_id = article_program.program_id and article.user_id = user.id
     </select>
 </mapper>

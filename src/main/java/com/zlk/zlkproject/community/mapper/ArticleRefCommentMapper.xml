@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zlk.zlkproject.community.mapper.ArticleRefCommentMapper">
+    <resultMap id="CommentResultMap" type="com.zlk.zlkproject.community.entity.ArticleRefComment" >
+        <id column="article_comment_id" property="articleCommentId" javaType="java.lang.Integer" />
+        <result column="article_id" property="articleId" jdbcType="INTEGER" />
+        <result column="comment_id" property="commentId" jdbcType="INTEGER" />
+        <association property="articleComment" javaType="com.zlk.zlkproject.community.entity.ArticleComment">
+            <id column="comment_id" property="commentId" jdbcType="INTEGER" />
+            <result column="user_id" property="userId" jdbcType="INTEGER" />
+            <result column="article_id" property="articleId" jdbcType="INTEGER" />
+            <result column="comment_content" property="commentContent" jdbcType="VARCHAR" />
+            <result column="comment_date" property="commentDate" jdbcType="TIMESTAMP" />
+        </association>
+    </resultMap>
+    <!--查询文章评论-->
+    <select id="findComment" resultMap="CommentResultMap">
+        SELECT
+        article_ref_comment.*,article_comment.*
+        FROM
+        article,article_ref_comment,article_comment
+        where
+        article.article_id = #{articleId} and article.article_id = article_ref_comment.article_id and article_ref_comment.comment_id = article_comment.comment_id
+        ORDER BY `article_comment`.`comment_date` DESC
+    </select>
+
+</mapper>
