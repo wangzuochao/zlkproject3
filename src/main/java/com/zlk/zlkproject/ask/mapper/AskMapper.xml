@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zlk.zlkproject.ask.mapper.AskMapper">
+    <resultMap id="AskResultMap" type="com.zlk.zlkproject.ask.entity.Ask">
+        <id column="ask_id" property="askId" jdbcType="INTEGER"/>
+        <result column="ask_person" property="askPerson" jdbcType="VARCHAR"/>
+        <result column="ask_content" property="askContent" jdbcType="VARCHAR"/>
+        <result column="ask_date" property="askDate" jdbcType="VARCHAR"/>
+        <result column="ask_report_num" property="askReportNum" jdbcType="INTEGER"/>
+        <result column="reply_person" property="replyPerson" jdbcType="VARCHAR"/>
+        <result column="reply_content" property="replyContent" jdbcType="VARCHAR"/>
+        <result column="adoption_num" property="adoptionNum" jdbcType="INTEGER"/>
+        <result column="reply_date" property="replyDate" jdbcType="VARCHAR"/>
+        <result column="reply_count" property="replyCount" jdbcType="INTEGER"/>
+        <result column="user_id" property="userId" jdbcType="INTEGER"/>
+    </resultMap>
+    <!--流加载全部提问-->
+    <select id="findAllAsk" resultMap="AskResultMap">
+       SELECT
+          a.`ask_id`,
+          b.`username` AS `ask_person`,
+          a.`ask_content` AS `ask_content`,
+          a.`ask_date` AS `ask_date`,
+          a.`ask_report_num` AS `ask_report_num`,
+          c.`username` AS `reply_person`,
+          m.`reply_content` AS `reply_content`,
+          m.`adoption_num` AS `adoption_num`,
+          m.`reply_date` AS `reply_date`,
+          n.`reply_count` AS `reply_count`
+        FROM
+          ask a
+          INNER JOIN `user` b
+            ON a.`user_id` = b.`id`
+          LEFT JOIN `reply` m
+            ON a.`ask_id` = m.`ask_id`
+          LEFT JOIN
+            (SELECT
+              ask_id,
+              MAX(adoption_num) adoption_num,
+              COUNT(ask_id) reply_count
+            FROM
+              `reply` a
+            GROUP BY ask_id) n
+            ON m.`adoption_num` = n.adoption_num
+          LEFT JOIN `user` c
+          ON m.`user_id` = c.`id`
+          WHERE 1 = 1
+          <if test="userId != null">
+            AND a.`user_id` = #{userId}
+          </if>
+          <if test="replyUserId != null">
+            AND m.`user_id` = #{userId}
+          </if>
+          ORDER BY a.`ask_date` DESC
+        limit #{pageIndex},#{pageSize}
+    </select>
+
+    <select id="countAsk" resultType="Integer">
+        SELECT COUNT(*) FROM `zlkproject`.`ask`
+    </select>
+</mapper>

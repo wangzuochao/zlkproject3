@@ -23,9 +23,9 @@ import java.util.Map;
  */
 @Service
 public class ArticleServiceImpl implements ArticleService {
-    @Autowired
-    private ArticleMapper articleMapper;
-    @Autowired
+  @Autowired
+   private ArticleMapper articleMapper;
+   @Autowired
     private ArticleRefLabelMapper articleRefLabelMapper;
     @Override
     public PageInfo<Article> pageArticle1(Integer pageIndex, Integer pageSize) {

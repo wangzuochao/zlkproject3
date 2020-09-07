@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zlk.zlkproject.ask.mapper.AskRefLabelMapper">
+    <resultMap id="LabelResultMap" type="com.zlk.zlkproject.ask.entity.AskRefLabel" >
+            <id column="ask_label_id" property="askLabelId" jdbcType="INTEGER" />
+            <result column="ask_id" property="askId" jdbcType="INTEGER" />
+            <result column="label_id" property="labelId" jdbcType="INTEGER" />
+            <association property="askLabel" javaType="com.zlk.zlkproject.ask.entity.AskLabel">
+                <id column="label_id" property="labelId" jdbcType="INTEGER" />
+                <result column="label_name" property="labelName" jdbcType="VARCHAR" />
+            </association>
+    </resultMap>
+    <!--查询提问标签-->
+    <select id="findLabel" resultMap="LabelResultMap">
+        SELECT
+        ask_ref_label.*,label.*
+        FROM
+        ask,ask_ref_label,label
+        where
+        ask.ask_id = #{askId} and ask.ask_id = ask_ref_label.ask_id and ask_ref_label.label_id = label.label_id
+        ORDER BY `label`.`label_id` DESC
+    </select>
+
+</mapper>
