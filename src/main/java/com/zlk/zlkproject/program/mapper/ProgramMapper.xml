@@ -9,10 +9,10 @@
     </resultMap>
 
     <select id="selectAllProgram" resultMap="programEntityMap">
-           SELECT
-          `program_id`,
-          `program_name`
-        FROM
-          `zlkproject`.`article_program`
+          SELECT
+  `program_id`,
+  `program_name`
+FROM
+  `zlkproject`.`article_program`
    </select>
 </mapper>

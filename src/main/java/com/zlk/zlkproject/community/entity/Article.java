@@ -1,5 +1,6 @@
 package com.zlk.zlkproject.community.entity;
 
+import com.zlk.zlkproject.user.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -48,6 +49,10 @@ public class Article {
     private List<ArticleRefLabel> articleRefLabels;
     /**注入栏目对象*/
     private ArticleProgram articleProgram;
+    /**注入用户*/
+    private User user;
+    /**注入文章评论*/
+    private List<ArticleRefComment> articleRefComments;
 
     @Override
     public String toString() {
