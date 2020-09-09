@@ -1,6 +1,6 @@
-package com.zlk.zlkproject.community.entity;
+package com.zlk.zlkproject.communitycyy.entity;
 
-import java.util.Date;
+import java.util.List;
 
 public class Ask {
 
@@ -11,14 +11,44 @@ public class Ask {
     //提问内容
     private String askContent;
     //提问时间
-    private Date askDate;
+    private String askDate;
     //举报数量
     private Integer askReportNum;
+    //注入用户 一对一
+    private User user;
+    //注入回答 一对多
+    private List<Reply> replyList;
+    //注入提问-标签关联对象
+    private List<AskRefLabel> askRefLabels;
+
+    public List<AskRefLabel> getAskRefLabels() {
+        return askRefLabels;
+    }
+
+    public void setAskRefLabels(List<AskRefLabel> askRefLabels) {
+        this.askRefLabels = askRefLabels;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public List<Reply> getReplyList() {
+        return replyList;
+    }
+
+    public void setReplyList(List<Reply> replyList) {
+        this.replyList = replyList;
+    }
 
     public Ask() {
     }
 
-    public Ask(Integer askId, String askContent, Date askDate, Integer askReportNum) {
+    public Ask(Integer askId, String askContent, String askDate, Integer askReportNum) {
         this.askId = askId;
         this.askContent = askContent;
         this.askDate = askDate;
@@ -49,11 +79,11 @@ public class Ask {
         this.askContent = askContent;
     }
 
-    public Date getAskDate() {
+    public String getAskDate() {
         return askDate;
     }
 
-    public void setAskDate(Date askDate) {
+    public void setAskDate(String askDate) {
         this.askDate = askDate;
     }
 
@@ -75,4 +105,3 @@ public class Ask {
                 '}';
     }
 }
-1

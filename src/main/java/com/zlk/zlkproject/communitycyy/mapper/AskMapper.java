@@ -1,6 +1,6 @@
-package com.zlk.zlkproject.community.mapper;
+package com.zlk.zlkproject.communitycyy.mapper;
 
-import com.zlk.zlkproject.community.entity.Ask;
+import com.zlk.zlkproject.communitycyy.entity.Ask;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
