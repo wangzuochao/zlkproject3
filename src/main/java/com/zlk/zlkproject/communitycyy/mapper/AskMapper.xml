@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zlk.zlkproject.communitycyy.mapper.AskMapper">
+    <resultMap id="askEntityMap" type="com.zlk.zlkproject.communitycyy.entity.Ask" >
+        <id column="ask_id" jdbcType="INTEGER" property="askId" />
+        <result column="user_id" jdbcType="INTEGER" property="userId" />
+        <result column="ask_content" jdbcType="VARCHAR" property="askContent" />
+        <result column="ask_date" jdbcType="VARCHAR" property="askDate" />
+        <result column="ask_report_num" jdbcType="INTEGER" property="askReportNum" />
+    </resultMap>
+    
+
+    
+    <!--分页查询提问信息-->
+    <select id="findAskList" parameterType="java.util.Map" resultMap="askEntityMap">
+        select *
+        from `ask`
+        order by ask_id desc limit #{pageIndex},#{pageSize}
+    </select>
+    <!--查询提问的总数-->
+    <select id="findAskCount" resultType="java.lang.Integer">
+        select count(*) from `ask`
+    </select>
+    <!--按回答数查询提问-->
+    <select id="findAskByAskReportNum" parameterType="java.util.Map" resultMap="askEntityMap">
+        select * from `ask` order by ask_report_num desc
+    </select>
+    
+    
+  
+    
+</mapper>

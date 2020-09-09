@@ -119,7 +119,7 @@
                             <div id="full" class="layui-tab layui-tab-brief " lay-filter="docDemoTabBrief2"
                                  style="margin-top: -8px;margin-left: 10px">
                                 <ul class="layui-tab-title ">
-                                    <li class="layui-this "><a href="<%=basePath%>/content" target="pageTarget2">全部</a>
+                                    <li class="layui-this "><a href="<%=basePath%>/article" target="pageTarget2">全部</a>
                                     </li>
                                     <li><a href="" target="pageTarget2">我的文章</a></li>
                                 </ul>
