@@ -24,11 +24,15 @@ public class AskServiceImpl implements AskService {
     private AskRefLabelMapper askRefLabelMapper;
 
     @Override
-    public PageInfo<Ask> pageAsk(Integer pageIndex, Integer pageSize) {
+    public PageInfo<Ask> pageAsk(Integer pageIndex, Integer pageSize,Map<String,Object> otherParams) {
         Map<String,Object> paraMap = new HashMap<String,Object>();
         Integer pageIndex1 = (pageIndex-1)*pageSize;
         paraMap.put("pageIndex",pageIndex1);
         paraMap.put("pageSize",pageSize);
+        Object labelIdArr = otherParams.get("labelIdArr");
+        if(labelIdArr != null){
+            paraMap.put("labelIdArr",labelIdArr);
+        }
         List<Ask> askList = askMapper.findAllAsk(paraMap);
         for (int i = 0; i < askList.size(); i++) {
             //封装labelList
@@ -40,6 +44,18 @@ public class AskServiceImpl implements AskService {
     @Override
     public Integer countAsk() {
         return askMapper.countAsk();
+    }
+
+    @Override
+    public PageInfo<Ask> hotAskList() {
+        List<Ask> asks = askMapper.selectHotAsk();
+        for (int i = 0; i < asks.size(); i++) {
+            //封装labelList
+            List<AskRefLabel> labelList = askRefLabelMapper.findLabel(asks.get(i).getAskId());
+            asks.get(i).setAskRefLabels(labelList);
+        }
+        PageInfo<Ask> askPageInfo = new PageInfo<>(asks);
+        return askPageInfo;
     }
 }
 

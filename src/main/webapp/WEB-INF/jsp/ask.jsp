@@ -48,7 +48,12 @@
                 //模拟插入
                 setTimeout(function () {
                     var lis = [];
-                    $.get('askAll?page=' + page + '&limit=2',
+                    var url = 'askAll?page=' + page + '&limit=2';
+                    var labelIdList = getQueryValue('labelIdList');
+                    if(labelIdList != null){
+                        url += "&labelIdList=" + labelIdList;
+                    }
+                    $.get(url,
                         function (res) {
                             /*console.info(res);*/
                             //假设你的列表返回在data集合中
@@ -108,7 +113,7 @@
                                 tmpHtml += span;
                                 tmpHtml += "</div>";
                                 tmpHtml += "<div class='layui-row' style='width: 100%;height: 100%;margin-top: 10px;'><strong>请问，";
-                                tmpHtml += "<a href=' "+item.askId+"' target='_top'>";
+                                tmpHtml += "<a href=\"<%=basePath%>replyContent?askId="+item.askId+"\" target='_top'>";
                                 tmpHtml += item.askContent;
                                 tmpHtml += "</a>";
                                 tmpHtml += "</strong>";
@@ -144,6 +149,16 @@
             }
         });
     });
+
+    function getQueryValue(queryName) {
+        var query = decodeURI(window.location.search.substring(1));
+        var vars = query.split("&");
+        for (var i = 0; i < vars.length; i++) {
+            var pair = vars[i].split("=");
+            if (pair[0] == queryName) { return pair[1]; }
+        }
+        return null;
+    }
 </script>
 </body>
 </html>

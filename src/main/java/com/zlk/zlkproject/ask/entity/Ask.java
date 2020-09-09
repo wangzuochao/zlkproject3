@@ -17,6 +17,8 @@ public class Ask {
     private String askDate;
     //举报数量
     private Integer askReportNum;
+    //回答Id
+    private Integer replyId;
 
     private String userName;
 
@@ -35,6 +37,15 @@ public class Ask {
     private String askImg;
 
     private List<AskRefLabel> askRefLabels;
+
+    public Integer getReplyId() {
+        return replyId;
+    }
+
+    public void setReplyId(Integer replyId) {
+        this.replyId = replyId;
+    }
+
 
     public String getAskImg() {
         return askImg;
@@ -75,7 +86,6 @@ public class Ask {
     public void setReplyCount(Integer replyCount) {
         this.replyCount = replyCount;
     }
-
 
 
     public List<AskRefLabel> getAskRefLabels() {

@@ -12,9 +12,9 @@ public class CommunityController {
         return "community";
     }
 
-    @RequestMapping(value = "/list")
-    public String list() {
-        return "list";
+    @RequestMapping(value = "/replyContent")
+    public String replyContent() {
+        return "replyContent";
     }
 
     @RequestMapping(value = "/ask")
@@ -29,7 +29,12 @@ public class CommunityController {
 
     @RequestMapping(value = "/myReply")
     public String myReply() {
-        return "myreply";
+        return "myReply";
+    }
+
+    @RequestMapping(value = "/hotAsk")
+    public String hotAsk() {
+        return "hotAsk";
     }
 
 }

@@ -25,4 +25,12 @@ public interface AskMapper {
   * @Date: 2020/9/4
   */
     Integer countAsk();
+    /**
+      * @Description: 查询热门提问
+      * @Param:
+      * @return:
+      * @Author: WangZuochao
+      * @Date: 2020/9/9
+      */
+    List<Ask> selectHotAsk();
 }

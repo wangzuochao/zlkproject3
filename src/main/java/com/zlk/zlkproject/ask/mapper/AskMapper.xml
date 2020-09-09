@@ -6,6 +6,7 @@
 <mapper namespace="com.zlk.zlkproject.ask.mapper.AskMapper">
     <resultMap id="AskResultMap" type="com.zlk.zlkproject.ask.entity.Ask">
         <id column="ask_id" property="askId" jdbcType="INTEGER"/>
+        <result column="reply_id" property="replyId" jdbcType="INTEGER"/>
         <result column="ask_person" property="askPerson" jdbcType="VARCHAR"/>
         <result column="ask_img" property="askImg" jdbcType="VARCHAR"/>
         <result column="ask_content" property="askContent" jdbcType="VARCHAR"/>
@@ -19,9 +20,10 @@
         <result column="user_id" property="userId" jdbcType="INTEGER"/>
     </resultMap>
     <!--流加载全部提问-->
-    <select id="findAllAsk" resultMap="AskResultMap">
+    <select id="findAllAsk" resultMap="AskResultMap" parameterType="Map">
        SELECT
           a.`ask_id`,
+          m.`reply_id`,
           b.`username` AS `ask_person`,
           b. `img_url` AS `ask_img`,
           a.`ask_content` AS `ask_content`,
@@ -29,7 +31,7 @@
           a.`ask_report_num` AS `ask_report_num`,
           c.`username` AS `reply_person`,
           m.`reply_content` AS `reply_content`,
-          m.`adoption_num` AS `adoption_num`,
+          n.`adoption_num` AS `adoption_num`,
           m.`reply_date` AS `reply_date`,
           n.`reply_count` AS `reply_count`
         FROM
@@ -56,6 +58,15 @@
           <if test="replyUserId != null">
             AND m.`user_id` = #{userId}
           </if>
+          <if test="labelIdArr != null">
+            AND a.`ask_id` in(
+              SELECT `ask_id` FROM `ask_ref_label` o
+              WHERE o.`label_id` IN
+              <foreach collection="labelIdArr" index="index" item="item" open="(" separator="," close=")">
+                #{item}
+              </foreach>
+            )
+          </if>
           ORDER BY a.`ask_date` DESC
         limit #{pageIndex},#{pageSize}
     </select>
@@ -63,4 +74,24 @@
     <select id="countAsk" resultType="Integer">
         SELECT COUNT(*) FROM `zlkproject`.`ask`
     </select>
+
+    <select id="selectHotAsk" resultMap="AskResultMap">
+    SELECT
+        a.`ask_id`,
+        a.`ask_content`,
+        c.`reply_count`
+        FROM
+        ask a
+        LEFT JOIN
+        (SELECT
+              ask_id,
+              COUNT(ask_id) `reply_count`
+            FROM
+              `reply` b
+            GROUP BY ask_id) c
+            ON a.`ask_id` = c.ask_id
+            ORDER BY c.`reply_count` DESC
+    </select>
+
+
 </mapper>
