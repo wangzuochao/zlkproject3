@@ -13,6 +13,6 @@
           `program_id`,
           `program_name`
         FROM
-          `zlk_project`.`program`
+          `zlkproject`.`article_program`
    </select>
 </mapper>
