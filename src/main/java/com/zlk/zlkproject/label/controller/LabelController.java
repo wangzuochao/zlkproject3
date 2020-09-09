@@ -1,7 +1,6 @@
 package com.zlk.zlkproject.label.controller;
 
 
-import com.zlk.zlkproject.essay.entity.Essay;
 import com.zlk.zlkproject.label.entity.Label;
 import com.zlk.zlkproject.label.service.LabelService;
 import org.springframework.stereotype.Controller;
