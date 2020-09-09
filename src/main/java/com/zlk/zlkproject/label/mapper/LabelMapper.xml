@@ -13,6 +13,6 @@
   `label_id`,
   `label_name`
 FROM
-  `zlk_project`.`label`
+  `zlkproject`.`label`
 </select>
 </mapper>
