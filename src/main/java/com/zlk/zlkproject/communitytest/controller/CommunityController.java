@@ -7,14 +7,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class CommunityController {
 
-    @RequestMapping(value = "/test")
-    public String test() {
+    @RequestMapping(value = "/community")
+    public String community() {
         return "community";
     }
 
-    @RequestMapping(value = "/list")
-    public String list() {
-        return "list";
+    @RequestMapping(value = "/replyContent")
+    public String replyContent() {
+        return "replyContent";
     }
 
     @RequestMapping(value = "/ask")
@@ -39,5 +39,15 @@ public class CommunityController {
         return "article/articleByProgram";
     }
 
+
+    @RequestMapping(value = "/myReply")
+    public String myReply() {
+        return "myReply";
+    }
+
+    @RequestMapping(value = "/hotAsk")
+    public String hotAsk() {
+        return "hotAsk";
+    }
 
 }

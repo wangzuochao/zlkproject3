@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zlk.zlkproject.communitycyy.mapper.AskRefLabelMapper" >
+  <resultMap id="askRefLabelMap" type="com.zlk.zlkproject.communitycyy.entity.AskRefLabel" >
+    <id column="ask_label_id" property="askLabelId" jdbcType="INTEGER" />
+    <result column="ask_id" property="askId" jdbcType="INTEGER" />
+    <result column="label_id" property="labelId" jdbcType="INTEGER" />
+    <association property="labelId" javaType="com.zlk.zlkproject.communitycyy.entity.Label">
+        <id column="label_id" property="labelId" jdbcType="INTEGER" />
+        <result column="label_name" property="labelName" jdbcType="VARCHAR" />
+    </association>
+    
+  </resultMap>
+
+  <select id="findAskLabel" parameterType="java.lang.Integer" resultMap="askRefLabelMap">
+      select a.label_name from label a,ask_ref_label b where b.label_id = a.label_id and b.ask_id = #{askId} order by a.label_id
+  </select>
+</mapper>

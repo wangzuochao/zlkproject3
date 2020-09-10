@@ -1,0 +1,10 @@
+<!--
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zlk.zlkproject.communitycyy.mapper.LabelMapper2" >
+  <resultMap id="labelMap" type="com.zlk.zlkproject.communitycyy.entity.Label" >
+    <id column="label_id" property="labelId" jdbcType="INTEGER" />
+    <result column="label_name" property="labelName" jdbcType="VARCHAR" />
+  </resultMap>
+
+</mapper>-->
