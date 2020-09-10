@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zlk.zlkproject.article.mapper.ArticleCommentRefReplyMapper">
+    <resultMap id="ComReplyResultMap" type="com.zlk.zlkproject.article.entity.ArticleCommentRefReply" >
+        <id column="comment_reply_id" property="commentReplyId" javaType="java.lang.Integer" />
+        <result column="comment_id" property="commentId" jdbcType="INTEGER" />
+        <result column="com_reply_id" property="comReplyId" jdbcType="INTEGER" />
+        <association property="articleCommentReply" javaType="com.zlk.zlkproject.article.entity.ArticleCommentReply">
+            <id column="com_reply_id" property="comReplyId" jdbcType="INTEGER" />
+            <result column="user_id" property="userId" jdbcType="INTEGER" />
+            <result column="comment_id" property="commentId" jdbcType="INTEGER" />
+            <result column="com_reply_content" property="comReplyContent" jdbcType="VARCHAR" />
+            <result column="com_reply_date" property="comReplyDate" jdbcType="TIMESTAMP" />
+        </association>
+    </resultMap>
+    <!--查询文章评论回复-->
+    <select id="findComReply" resultMap="ComReplyResultMap">
+        SELECT
+        comment_ref_reply.*,article_comment_reply.*
+        FROM
+        article_comment_reply,article_comment,comment_ref_reply
+        where
+        article_comment.comment_id = #{commentId} and article_comment.comment_id = comment_ref_reply.comment_id and comment_ref_reply.com_reply_id = article_comment_reply.com_reply_id
+        ORDER BY `article_comment_reply`.`com_reply_date` ASC
+    </select>
+
+</mapper>

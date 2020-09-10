@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zlk.zlkproject.article.mapper.ArticleMapper">
+    <resultMap id="ArticleResultMap" type="com.zlk.zlkproject.article.entity.Article" >
+        <id column="article_id" property="articleId" jdbcType="INTEGER" />
+        <result column="user_id" property="userId" jdbcType="INTEGER" />
+        <result column="program_id" property="programId" jdbcType="INTEGER" />
+        <result column="article_title" property="articleTitle" jdbcType="VARCHAR" />
+        <result column="article_content_markdown" property="articleContentMarkdown" jdbcType="LONGVARCHAR" />
+        <result column="article_content_html" property="articleContentHtml" jdbcType="LONGVARCHAR" />
+        <result column="article_date" property="articleDate" jdbcType="TIMESTAMP" />
+        <result column="like_num" property="likeNum" jdbcType="INTEGER" />
+        <result column="stamp_num" property="stampNum" jdbcType="INTEGER" />
+        <result column="article_report_num" property="articleReportNum" jdbcType="INTEGER" />
+        <result column="article_image" property="articleImage" jdbcType="VARCHAR" />
+        <result column="pageviews" property="pageviews" jdbcType="INTEGER" />
+        <result column="top_status" property="topStatus" jdbcType="INTEGER" />
+        <association property="articleProgram" javaType="com.zlk.zlkproject.article.entity.ArticleProgram">
+            <id column="program_id" property="programId" jdbcType="VARCHAR" />
+            <result column="program_name" property="programName" jdbcType="VARCHAR" />
+        </association>
+        <association property="user" javaType="com.zlk.zlkproject.user.entity.User">
+            <id column="id" property="userId" jdbcType="INTEGER" />
+            <result column="username" property="userName" jdbcType="VARCHAR" />
+            <result column="img_url" property="imgUrl" jdbcType="VARCHAR" />
+        </association>
+    </resultMap>
+    <!--流加载全部文章-->
+    <select id="findAllLayui" resultMap="ArticleResultMap">
+        SELECT
+        article.*,article_program.*
+        FROM
+        article,article_program
+        where
+        article.program_id = article_program.program_id
+        <if test="userId !=null">
+            and article.user_id = #{userId}
+        </if>
+        <if test="programId!=null">
+            and article.program_id = #{programId}
+        </if>
+        ORDER BY `article`.`top_status` DESC, `article`.`pageviews` DESC
+        limit #{pageIndex},#{pageSize}
+    </select>
+    <!--根据栏目id获取文章总数-->
+    <select id="countArticle" resultType="Integer">
+        SELECT COUNT(*) FROM article
+        <where>
+            <if test="programId!=null">
+                and article.program_id = #{programId}
+            </if>
+        </where>
+    </select>
+    <!--查询单篇文章的内容 包含用户信息和栏目信息-->
+    <select id="getArticleById" resultMap="ArticleResultMap">
+        SELECT
+        article.*,article_program.*,user.*
+        FROM
+        article,article_program,user
+        where
+        article_id = #{articleId} and article.program_id = article_program.program_id and article.user_id = user.id
+    </select>
+    <!--热门文章查询  按点赞数降序排列-->
+    <select id="findHotArticle" resultMap="ArticleResultMap">
+        select article.*,user.*
+        from article,user
+        where article.user_id = user.id
+            <if test="programId!=null">
+                and article.program_id = #{programId}
+            </if>
+        order by like_num DESC
+        limit 10
+    </select>
+<!--更新文章-->
+    <update id="updateArticle" parameterType="com.zlk.zlkproject.article.entity.Article">
+        update
+        article
+        <set>
+            <if test="userId != null">user_id = #{userId,jdbcType=INTEGER},</if>
+            <if test="programId != null">program_id = #{programId,jdbcType=INTEGER},</if>
+            <if test="articleTitle != null">article_title = #{articleTitle,jdbcType=VARCHAR},</if>
+            <if test="articleContentMarkdown != null">article_content_markdown = #{articleContentMarkdown,jdbcType=LONGVARCHAR},</if>
+            <if test="articleContentHtml != null">article_content_html = #{articleContentHtml,jdbcType=LONGVARCHAR},</if>
+            <if test="articleDate != null">article_date = #{articleDate,jdbcType=TIMESTAMP},</if>
+            <if test="likeNum != null">like_num = #{likeNum,jdbcType=INTEGER},</if>
+            <if test="stampNum != null">stamp_num = #{stampNum,jdbcType=INTEGER},</if>
+            <if test="articleReportNum != null">article_report_num = #{articleReportNum,jdbcType=INTEGER},</if>
+            <if test="articleImage != null">article_image = #{articleImage,jdbcType=VARCHAR},</if>
+            <if test="pageviews != null">pageviews = #{pageviews,jdbcType=INTEGER},</if>
+            <if test="topStatus != null">top_status = #{topStatus,jdbcType=INTEGER},</if>
+        </set>
+        where article_id = #{articleId,jdbcType=INTEGER}
+    </update>
+</mapper>

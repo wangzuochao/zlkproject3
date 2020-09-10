@@ -16,6 +16,7 @@
     <script type="text/javascript" src="<%=basePath%>/editor.md-master/editormd.min.js"></script>
     <link rel="stylesheet" href="<%=basePath%>/layui/css/layui.css">
     <style>
+
         .contentHight {
             height: 700px;
         }
@@ -48,7 +49,6 @@
             color: #fff;
         }
 
-
     </style>
 </head>
 <body class="layui-layout-body">
@@ -69,8 +69,8 @@
         <div id="div_body" style="height: 700px;border:0px solid #F00;">
             <div id="community" class="layui-tab" lay-filter="tabDemo">
                 <ul class="layui-tab-title">
-                    <li class="layui-this layui-bg-blue"><a href="<%=basePath%>/ask" target="pageTarget">提问</a></li>
-                    <li id="title"><a href="<%=basePath%>/content" target="pageTarget">文章</a></li>
+                    <li id="ask" class="layui-this layui-bg-blue"><a href="<%=basePath%>/ask" target="pageTarget">提问</a></li>
+                    <li id="title"><a href="" target="pageTarget">文章</a></li>
                 </ul>
                 <div class="layui-tab-content">
                     <div class="layui-tab-item layui-show">
@@ -85,15 +85,14 @@
                             <div id="all" class="layui-tab layui-tab-brief " lay-filter="docDemoTabBrief"
                                  style="margin-top: -8px;margin-left: 10px">
                                 <ul class="layui-tab-title ">
-                                    <li class="layui-this "><a href="<%=basePath%>/list" target="pageTarget">全部</a>
+                                    <li class="layui-this "><a href="<%=basePath%>/ask" target="pageTarget">全部</a>
                                     </li>
-                                    <li><a href="<%=basePath%>/login" target="pageTarget">我的提问</a></li>
+                                    <li><a href="" target="pageTarget">我的提问</a></li>
                                     <li><a href="" target="pageTarget">我的回答</a></li>
                                 </ul>
                                 <%--                                <div class="layui-tab-content"></div>--%>
-
                             </div>
-                            <iframe src="<%=basePath%>/ask" name="pageTarget"
+                            <iframe id="c-c-iframe" src="<%=basePath%>/ask" name="pageTarget"
                                     style="width: 100%;height: 550px;border: 0 none;vertical-align: middle;"
                                     frameborder="1">
                             </iframe>
@@ -101,8 +100,8 @@
                         <div class="layui-col-md3 contentHight" style="border:0px solid #F00;text-align: center;">
                             <h3>热门提问</h3>
                             <hr class="layui-bg-blue">
-                            <iframe src="<%=basePath%>/list" name="pageTarget"
-                                    style="width: 100%;height: 550px;border: 0 none;vertical-align: middle;"
+                            <iframe src="<%=basePath%>/list" name="pageTarget1"
+                                    style="width: 100%;height: 80%;border: 0 none;vertical-align: middle;"
                                     frameborder="1">
                             </iframe>
                         </div>
@@ -119,21 +118,23 @@
                             <div id="full" class="layui-tab layui-tab-brief " lay-filter="docDemoTabBrief2"
                                  style="margin-top: -8px;margin-left: 10px">
                                 <ul class="layui-tab-title ">
-                                    <li class="layui-this "><a href="<%=basePath%>/content" target="pageTarget2">全部</a>
+                                    <li class="layui-this "><a href="<%=basePath%>/article" target="pageTarget2">全部</a>
                                     </li>
-                                    <li><a href="" target="pageTarget2">我的文章</a></li>
+                                    <li><a href="<%=basePath%>/list" target="pageTarget2">我的文章</a></li>
                                 </ul>
                                 <%--                                <div class="layui-tab-content"></div>--%>
                             </div>
-                            <iframe src="" name="pageTarget2"
+
+                            <iframe id="clear" src="<%=basePath%>/article" name="pageTarget2"
                                     style="width: 100%;height: 100%;border: 0 none;vertical-align: middle;"
                                     frameborder="1">
                             </iframe>
+
                         </div>
                         <div class="layui-col-md3 contentHight" style="border:0px solid #F00;text-align: center;">
                             <h3>热门文章</h3>
                             <hr class="layui-bg-blue">
-                            <iframe src="" name="pageTarget3"
+                            <iframe src="<%=basePath%>/hotArticle" name="pageTarget3"
                                     style="width: 100%;height: 100%;border: 0 none;vertical-align: middle;"
                                     frameborder="1">
                             </iframe>
@@ -144,8 +145,8 @@
             <button id="but_a" class="layui-btn layui-btn-normal"
                     style="position: relative;margin-left: 900px;margin-top:-1490px;">发起提问
             </button>
-
         </div>
+
         <div id="div_body1" style="height: 650px;border:0px solid #3aff55;display: none">
             <dl>
                 <dd style="text-align: center;color: dodgerblue;margin-top: 45px"><h1><strong>快速了解如何发文</strong></h1>
@@ -177,7 +178,12 @@
                     style="margin-left: 400px;margin-top:50px;width: 300px">知道了，开始撰写
             </button>
         </div>
+
         <div id="div_body2" name="body2" style="height: 650px;border:0px solid #3aff55;display: none">
+            <div style="margin-top: 10px">
+            题       目    ：   <input type="text" style="border: white">
+            </div>
+            <hr class="layui-bg-blue">
             <div id="test-editor">
                 <textarea style="display:none;"></textarea>
             </div>
@@ -191,6 +197,7 @@
 
 <script src="<%=basePath%>/layui/layui.js"></script>
 <script>
+
     let testEditor;
     //JavaScript代码区域
     layui.use('element', function () {
@@ -205,7 +212,9 @@
             }
         });
     });
+
     $(document).ready(function () {
+
         var changeColorArray = new Array();
 
         $("#community > ul> li").click(function (e) {
@@ -213,23 +222,19 @@
             $(e.currentTarget).addClass("layui-bg-blue");
 
         });
-        $("#button > div> button").click(function (e) {
 
-            if ($(e.currentTarget).hasClass("layui-bg-blue")) {
-                $(e.currentTarget).removeClass("layui-bg-blue");
-            } else {
-                $(e.currentTarget).addClass("layui-bg-blue");
-                changeColorArray.push($(e.currentTarget));
-            }
-            if (changeColorArray.length > 3) {
-                changeColorArray[0].removeClass("layui-bg-blue");
-                changeColorArray.splice(0, 1);
-
-            }
+        $("#ask").click(function (e) {
+            $("#label > dd").find("a").removeClass("rcorners1");
         });
+
+        $("#title").click(function (e) {
+            $("#program > dd").find("a").removeClass("resource");
+        });
+
         $("#cancel").click(function () {
             layer.closeAll();
         })
+
         $("#continue").click(function () {
             $("#div_body1").css("display", "none");
             $("#div_body2").css("display", "block");
@@ -244,6 +249,7 @@
             });
             // testEditor.toolbarHandlers.image = testEditor.executePlugin("imageDialog","image-dialog/image-dialog")；
         });
+
         $("#publish").click(function () {
             var aa = testEditor.getHTML();
             var bb = testEditor.getMarkdown();
@@ -272,17 +278,45 @@
                         }, 1000)
                     },
                     error: function (xhr, status, error) {
-                        alert("dddddd");
                         debugger;
                     }
                 });
             })
         })
+
         $("#but_a").click(function () {
             if ($("#but_a").text() == "发表文章") {
                 $("#div_body").css("display", "none");
                 $("#div_body1").css("display", "block");
             } else {
+                $.ajax({
+                    url: '<%=basePath%>/label/selectLabel',
+                    type: 'GET',
+                    contentType: "application/json",
+                    dataType: 'json',
+                    data: {},
+                    async: false,
+                    success: function (data) {
+                        var askLabelHtml = askLabel(data);
+                        $("#askLabel").html(askLabelHtml);
+                        $("#askLabel > span").click(function (e) {
+                            if ($(e.currentTarget).hasClass("layui-badge layui-bg-blue")) {
+                                $(e.currentTarget).removeClass("layui-badge layui-bg-blue");
+                            } else {
+                                $(e.currentTarget).addClass("layui-badge layui-bg-blue");
+                                changeColorArray.push($(e.currentTarget));
+                            }
+                            if (changeColorArray.length > 3) {
+                                changeColorArray[0].removeClass("layui-badge layui-bg-blue");
+                                changeColorArray.splice(0, 1);
+                            }
+                        });
+                    },
+                    error: function (xhr, status, error) {
+                        debugger;
+                        console.log("发生错误");
+                    }
+                });
                 layer.open({
                     area: ['900px', '550px'],
                     title: "提问题",
@@ -292,6 +326,19 @@
                 });
             }
         });
+
+        function askLabel(data) {
+            var result = data;
+            var html = "";
+            for (var i = 0; i < result.length; i++) {
+                html += "<span labelId=\"" + result[i].labelId + "\" class=\"layui-badge-rim\" style='border-radius: 20px;font-size: 15px;margin-left: 15px;margin-top: 10px'>";
+                html += result[i].labelName;
+                html += "</span>";
+            }
+            html += "";
+            return html;
+        }
+
         $.ajax({
             url: '<%=basePath%>/label/selectLabel',
             type: 'GET',
@@ -318,7 +365,12 @@
                         $("#label > dd").find("a").removeClass("rcorners1");
                     });
                     var labelId = $(e.currentTarget).attr("labelId");
-                    // alert(labelId);
+                    //alert(labelId);
+                    var labelIdList = [];
+                    for(var i = 0 ; i < changeColorArray.length; i++){
+                        labelIdList.push(changeColorArray[i].attr("labelId"));
+                    }
+                    alert(JSON.stringify(labelIdList));
                 });
             },
             error: function (xhr, status, error) {
@@ -351,6 +403,7 @@
             data: {},
             async: false,
             success: function (data) {
+                console.log(data);
                 var html = programHtml(data);
                 $("#program").html(html);
                 $("#program > dd").find("a").click(function (e) {
@@ -360,7 +413,7 @@
                         $(e.currentTarget).addClass("resource");
                         changeColorArray.push($(e.currentTarget));
                     }
-                    if (changeColorArray.length > 2) {
+                    if (changeColorArray.length > 1) {
                         changeColorArray[0].removeClass("resource");
                         changeColorArray.splice(0, 1);
                     }
@@ -369,6 +422,7 @@
                     });
                     var programId = $(e.currentTarget).attr("programId");
                     // alert(programId);
+
                 });
             },
             error: function (xhr, status, error) {
@@ -380,13 +434,15 @@
         function programHtml(result) {
             var result = result;
             var html = "";
+            var array=new Array(15);
             for (var i = 0; i < result.length; i++) {
+                array[i]= result[i].programId;
                 html += "<dd>";
-                html += "<h3>";
-                html += "<a programId=\"" + result[i].programId + "\" style=\"height: 100px; line-height: 40px\">";
+                html += "<h2>";
+                html += "<a programId='" + array[i] + "' href='/articleByProgram?programId="+array[i]+"' target=\"pageTarget2\" style=\"height: 100px; line-height: 40px\">";
                 html += result[i].programName;
                 html += "</a>";
-                html += "</h3>";
+                html += "</h2>";
                 html += "</dd>";
             }
             html += "";
@@ -406,53 +462,10 @@
                         <th><h6 style="color: lightgray">至少选择1个，最多选择三个</h6></th>
                     </tr>
                 </table>
-                <button type="button" class="layui-btn layui-btn-primary layui-btn-radius"
-                        style="background: whitesmoke;border-radius: 20px; padding:0px 1px 1px 1px;width: 50px;height: 20px;">
-
-                </button>
-                <span style="margin-bottom: 1000px; margin-left: -45px">Java</span>
-                <button type="button" class="layui-btn layui-btn-primary layui-btn-radius"
-                        style="background: whitesmoke;border-radius: 20px; padding:0px 1px 1px 1px;width: 100px;height: 20px;margin-left: 20px">
-
-                </button>
-                <span style="margin-bottom: 1000px; margin-left: -95px">HTML5+CSS</span>
-                <button type="button" class="layui-btn layui-btn-primary layui-btn-radius"
-                        style="background: whitesmoke;border-radius: 20px; padding:0px 1px 1px 1px;width: 80px;height: 20px;margin-left: 20px">
-
-                </button>
-                <span style="margin-bottom: 1000px; margin-left: -77px">JavaScript</span>
-                <button type="button" class="layui-btn layui-btn-primary layui-btn-radius"
-                        style="background: whitesmoke;border-radius: 20px; padding:0px 1px 1px 1px;width: 55px;height: 20px;margin-left: 20px">
-
-                </button>
-                <span style="margin-bottom: 1000px; margin-left: -52px">Jquery</span>
-                <button type="button" class="layui-btn layui-btn-primary layui-btn-radius"
-                        style="background: whitesmoke;border-radius: 20px; padding:0px 1px 1px 1px;width: 50px;height: 20px;margin-left: 20px">
-
-                </button>
-                <span style="margin-bottom: 1000px; margin-left: -48px">C语言</span>
-                <button type="button" class="layui-btn layui-btn-primary layui-btn-radius"
-                        style="background: whitesmoke;border-radius: 20px; padding:0px 1px 1px 1px;width: 50px;height: 20px;margin-left: 20px">
-
-                </button>
-                <span style="margin-bottom: 1000px; margin-left: -44px">C++</span>
-                <button type="button" class="layui-btn layui-btn-primary layui-btn-radius"
-                        style="background: whitesmoke;border-radius: 20px; padding:0px 1px 1px 1px;width: 50px;height: 20px;margin-left: 20px">
-
-                </button>
-                <span style="margin-bottom: 1000px; margin-left: -45px">Web</span>
-                <button type="button" class="layui-btn layui-btn-primary layui-btn-radius"
-                        style="background: whitesmoke;border-radius: 20px; padding:0px 1px 1px 1px;width: 50px;height: 20px;margin-left: 20px">
-
-                </button>
-                <span style="margin-bottom: 1000px; margin-left: -45px">Layui</span>
-                <button type="button" class="layui-btn layui-btn-primary layui-btn-radius"
-                        style="background: whitesmoke;border-radius: 20px; padding:0px 1px 1px 1px;width: 50px;height: 20px;margin-left: 20px">
-
-                </button>
-                <span style="margin-bottom: 1000px; margin-left: -45px">Vue</span>
+                <div id="askLabel">
+                </div>
                 <div>
-                    <h6 style="color: lightgray; margin-top: 35px">请选择问题相对路径</h6>
+                    <h6 style="color: lightgray; margin-top: 10px">请选择问题相对路径</h6>
                     <table>
                         <tr>
                             <th>
@@ -506,6 +519,7 @@
             <button class="layui-btn layui-btn-fluid layui-bg-blue" style="width: 150px" lay-submit>提交</button>
         </div>
     </div>
+
 </form>
 </body>
 </html>
