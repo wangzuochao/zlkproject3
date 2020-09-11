@@ -1,6 +1,7 @@
 package com.zlk.zlkproject.article.mapper;
 
 import com.zlk.zlkproject.article.entity.Article;
+import com.zlk.zlkproject.article.entity.ArticleRefReport;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -37,7 +38,7 @@ public interface ArticleMapper {
      *
      * @return 数量
      */
-    Integer countArticle(Integer programId);
+    Integer countArticle(Map map);
     /**
      * 根据id查询带用户的文章信息
      *
@@ -59,4 +60,11 @@ public interface ArticleMapper {
      * @return 影响行数
      */
     Integer updateArticle(Article article);
+    /**
+     * 添加对文章的举报
+     *
+     *
+     * @return 数量
+     */
+    Integer insertArticleReport(ArticleRefReport articleRefReport);
 }

@@ -54,10 +54,11 @@
 
 
 <rapid:override name="left">
+<%--    举报弹出框--%>
     <form  class="layui-form" action="" id="formCustomClick" style="display: none" lay-filter="formCustomFilter">
         <div class="layui-form-item">
             <div class="layui-inline">
-                <label class="layui-form-label">举报理由：</label>
+                <label class="layui-form-label"style="width: 110px"><span style="color: red">*</span>举报理由：</label>
                 <div class="layui-input-block">
                     <textarea id="c10" name="note" style="display: none;"></textarea>
                 </div>
@@ -214,7 +215,7 @@
 <rapid:override name="footer-script">
     <script src="/articleDetailModel/js/jquery.cookie.js"></script>
 
-    <script src="/layui/layui.js"></script>
+   <%-- <script src="/layui/layui.js"></script>--%>
 
     <script type="text/javascript">
 

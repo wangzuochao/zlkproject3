@@ -2,17 +2,16 @@ package com.zlk.zlkproject.article.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageInfo;
+import com.sun.javaws.IconUtil;
 import com.zlk.zlkproject.article.entity.Article;
+import com.zlk.zlkproject.article.entity.ArticleRefReport;
 import com.zlk.zlkproject.article.service.ArticleService;
 import com.zlk.zlkproject.label.entity.Label;
 import com.zlk.zlkproject.label.service.LabelService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
@@ -56,6 +55,7 @@ public class ArticleController {
     /**
      *
      * 流加载查询全部文章或我的文章列表
+     * 根据栏目查询文章列表
      * @description: * @param null
      * @return:
      * @author: zhc
@@ -65,12 +65,45 @@ public class ArticleController {
     @RequestMapping("/flow")
     @ResponseBody
     public Map<String,Object> flow(Integer page, Integer limit,Integer programId)throws Exception{
-//添加userId的获取方法
+        //添加userId的获取方法
         Integer userId = null;
+        Integer labelId = null;
         //System.out.println(programId);
         //文章列表
-        PageInfo<Article> articleList = articleService.pageArticle1(page,limit,userId,programId);
-        Integer pages = articleService.countArticle(programId)/limit+1;
+        PageInfo<Article> articleList = articleService.pageArticle1(page,limit,userId,programId,labelId);
+        Map<String,Object> map1 = new HashMap<String,Object>();
+        map1.put("programId",programId);
+        Integer pages = articleService.countArticle(map1)/limit+1;
+        System.out.println(pages);
+        // System.out.println(articleService.countArticle(1));
+        Map<String,Object> map = new HashMap<String, Object>();
+        map.put("data",articleList);
+        map.put("pages",pages);
+        map.put("islogin",0);
+        return map;
+    }
+    /**
+     *
+     *
+     * 根据标签查询文章列表
+     * @description: * @param null
+     * @return:
+     * @author: zhc
+     * @time: 2020/9/7 8:39
+     */
+
+    @RequestMapping("/flowByLabel")
+    @ResponseBody
+    public Map<String,Object> flowByLabel(Integer page, Integer limit,Integer labelId)throws Exception{
+        //添加userId的获取方法
+        Integer userId = null;
+        Integer programId = null;
+        //System.out.println(labelId);
+        //文章列表
+        PageInfo<Article> articleList = articleService.pageArticle1(page,limit,userId,programId,labelId);
+        Map<String,Object> map1 = new HashMap<String, Object>();
+        map1.put("labelId",labelId);
+        Integer pages = articleService.countArticle(map1)/limit+1;
         // System.out.println(articleService.countArticle(1));
         Map<String,Object> map = new HashMap<String, Object>();
         map.put("data",articleList);
@@ -82,7 +115,7 @@ public class ArticleController {
      * 一篇文章详情页显示
      *
      * @param articleId 文章ID
-     * @return modelAndView
+     * @return jsp
      */
     @RequestMapping(value = "/article/{articleId}")
     public String getArticleDetailPage(@PathVariable("articleId") Integer articleId, Model model) {
@@ -190,17 +223,23 @@ public class ArticleController {
     /**
      * 举报增加
      *
-     * @param id 文章ID
+     * @param
      * @return 举报数量
      */
-    @RequestMapping(value = "/article/report/{id}", method = {RequestMethod.POST})
+    @RequestMapping(value = "/article/reportArticle", method = {RequestMethod.POST})
     @ResponseBody
-    public String increaseReportCount(@PathVariable("id") Integer id) {
-        Article article = articleService.getArticleById(id);
-        Integer articleReportCount = article.getArticleReportNum() + 1;
-        article.setArticleReportNum(articleReportCount);
-        Integer num = articleService.updateArticle(article);
-        System.out.println(num);
-        return JSON.toJSONString(articleReportCount);
+    public String increaseReportCount(@RequestBody ArticleRefReport report) {
+        System.out.println(report.toString());
+        Integer flag = 0;
+        if(report.getReport()!=null&&report.getReport()!="") {
+            flag = articleService.insertArticleReport(report);
+        }
+        //Article article = articleService.getArticleById(custom.getArticleId());
+        //Integer articleReportCount = article.getArticleReportNum() + 1;
+       // article.setArticleReportNum(articleReportCount);
+        //Integer num = articleService.updateArticle(article);
+        //System.out.println(num);
+
+        return String.valueOf(flag);
     }
 }

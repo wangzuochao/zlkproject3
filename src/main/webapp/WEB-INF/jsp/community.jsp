@@ -73,7 +73,7 @@
                 <ul class="layui-tab-title">
                     <li id="ask" class="layui-this layui-bg-blue"><a href="<%=basePath%>/ask" target="pageTarget">提问</a>
                     </li>
-                    <li id="title"><a href="" target="pageTarget">文章</a></li>
+                    <li id="title"><a href="<%=basePath%>/article" target="pageTarget">文章</a></li>
                 </ul>
                 <div class="layui-tab-content">
                     <div class="layui-tab-item layui-show">

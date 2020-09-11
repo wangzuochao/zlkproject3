@@ -27,13 +27,18 @@
             <result column="username" property="userName" jdbcType="VARCHAR" />
             <result column="img_url" property="imgUrl" jdbcType="VARCHAR" />
         </association>
+        <collection property="articleRefLabels" ofType="com.zlk.zlkproject.article.entity.ArticleRefLabel">
+            <id column="article_label_id" property="articleLabelId" javaType="java.lang.Integer" />
+            <result column="article_id" property="articleId" jdbcType="INTEGER" />
+            <result column="label_id" property="labelId" jdbcType="INTEGER" />
+        </collection>
     </resultMap>
     <!--流加载全部文章-->
     <select id="findAllLayui" resultMap="ArticleResultMap">
         SELECT
-        article.*,article_program.*
+        DISTINCT article.*,article_program.*
         FROM
-        article,article_program
+        article,article_program,article_ref_label
         where
         article.program_id = article_program.program_id
         <if test="userId !=null">
@@ -42,17 +47,25 @@
         <if test="programId!=null">
             and article.program_id = #{programId}
         </if>
+        <if test="labelId!=null">
+            and article_ref_label.label_id = #{labelId} and article_ref_label.article_id = article.article_id
+        </if>
+
         ORDER BY `article`.`top_status` DESC, `article`.`pageviews` DESC
         limit #{pageIndex},#{pageSize}
     </select>
     <!--根据栏目id获取文章总数-->
     <select id="countArticle" resultType="Integer">
-        SELECT COUNT(*) FROM article
-        <where>
+        SELECT COUNT(DISTINCT article.article_id) FROM article,article_ref_label
+
+        where article.article_id=article_ref_label.article_id
             <if test="programId!=null">
                 and article.program_id = #{programId}
             </if>
-        </where>
+            <if test="labelId!=null">
+                and article_ref_label.label_id = #{labelId} and article_ref_label.article_id = article.article_id
+            </if>
+
     </select>
     <!--查询单篇文章的内容 包含用户信息和栏目信息-->
     <select id="getArticleById" resultMap="ArticleResultMap">
@@ -94,4 +107,31 @@
         </set>
         where article_id = #{articleId,jdbcType=INTEGER}
     </update>
+    <!--举报文章-->
+    <insert id="insertArticleReport" parameterType="com.zlk.zlkproject.article.entity.ArticleRefReport">
+         insert into article_ref_report
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="articleId !=null">
+                article_id,
+            </if>
+            <if test="userId !=null">
+                user_id,
+            </if>
+            <if test="report !=null and report!=''">
+                report_content,
+            </if>
+        </trim>
+        values
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="articleId !=null">
+                #{articleId},
+            </if>
+            <if test="userId !=null">
+                #{userId},
+            </if>
+            <if test="report !=null and report!=''">
+                #{report},
+            </if>
+        </trim>
+    </insert>
 </mapper>

@@ -117,7 +117,7 @@
                     //String str = request.getParameter("programId");
                     //int programId = Integer.parseInt(str);
 
-                    $.get('flow?page=' + page + '&limit=1',
+                    $.get('flowByLabel?page=' + page + '&limit=1&labelId='+labelId,
                         function (res) {
                             console.log(res);
                             console.log(res.data);

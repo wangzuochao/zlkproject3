@@ -35,13 +35,14 @@ public class ArticleServiceImpl implements ArticleService {
     @Autowired
     private UserMapper userMapper;
     @Override
-    public PageInfo<Article> pageArticle1(Integer pageIndex, Integer pageSize,Integer userId,Integer programId) {
+    public PageInfo<Article> pageArticle1(Integer pageIndex, Integer pageSize,Integer userId,Integer programId,Integer labelId) {
         Map<String,Object> paraMap = new HashMap<String,Object>();
         Integer pageIndex1 = (pageIndex-1)*pageSize;
         paraMap.put("pageIndex",pageIndex1);
         paraMap.put("pageSize",pageSize);
         paraMap.put("userId",userId);
         paraMap.put("programId",programId);
+        paraMap.put("labelId",labelId);
         List<Article> articleList = articleMapper.findAllLayui(paraMap);
         for (int i = 0; i < articleList.size(); i++) {
             DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -68,8 +69,8 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public Integer countArticle(Integer programId) {
-        return articleMapper.countArticle(programId);
+    public Integer countArticle(Map map) {
+        return articleMapper.countArticle(map);
     }
 
     @Override
@@ -115,5 +116,10 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public Integer updateArticle(Article article) {
         return articleMapper.updateArticle(article);
+    }
+
+    @Override
+    public Integer insertArticleReport(ArticleRefReport articleRefReport) {
+        return articleMapper.insertArticleReport(articleRefReport);
     }
 }

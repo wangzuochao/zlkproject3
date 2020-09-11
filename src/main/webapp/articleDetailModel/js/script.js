@@ -371,27 +371,71 @@ function increaseStampCount() {
 //举报+1
 function increaseReportCount() {
     if ($.cookie("reportId") != articleId || $.cookie("reportId") == null) {
-        $.ajax({
-            async: false,
-            type: "POST",
-            url: "/article/report/" + articleId,
-            dataType: 'json',
-            contentType: 'application/json',
-            success: function (data) {
-                layer.msg("举报该篇文章成功！");
-                $.cookie(
-                    "reportId",
-                    articleId,//需要cookie写入的业务
-                    {
-                        "path": "/", //cookie的默认属性
+        layui.use([ 'layer', 'form','jquery','layedit'], function(){
+            var layer = layui.layer,
+                form=layui.form,
+                $=layui.$,
+                layedit=layui.layedit;
+            layer.open({
+                type:1
+                ,area:['700px', '480px']
+                ,title:'填写举报信息'
+                ,content:$("#formCustomClick")
+              ,success:function (layero, index) {
+             dataCustomC10=layedit.build('c10');
+
+
+
+
+            form.on('submit(customClick)', function(data){
+                console.log(data);
+                console.log(dataCustomC10);
+                var dataC10=layedit.getContent(dataCustomC10);
+               // console.log(dataC10);
+
+                var note=dataC10;
+                var report={
+                    "articleId":articleId,
+                    "report":note
+                };
+
+
+                var requestBody=JSON.stringify(report);
+                //console.log(requestBody);
+                $.ajax({
+                    type: "POST",
+                    url: "/article/reportArticle",
+                    contentType:'application/json;charset=utf-8',
+                    data: requestBody,
+                    success: function(msg){
+                        if(msg==1) {
+                            layer.close(index);
+                            layer.msg("举报该篇文章成功！");
+                            $.cookie(
+                                "reportId",
+                                articleId,//需要cookie写入的业务
+                                {
+                                    "path": "/", //cookie的默认属性
+                                }
+                            );
+                            setTimeout(function(){
+
+                                window.location.reload();
+
+                            }, 1000);
+                        }
+                        else {
+                            layer.msg("举报失败！请填写举报理由");
+                        }
                     }
-                );
-            },
-            error: function () {
-                alert("获取数据出错!");
-            },
+                });
+                return false;
+            });
+
+        }
         });
-    }
+    });
+}
 }
 
 //ajax提交评论信息

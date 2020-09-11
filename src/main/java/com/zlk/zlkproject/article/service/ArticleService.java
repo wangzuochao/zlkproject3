@@ -2,8 +2,10 @@ package com.zlk.zlkproject.article.service;
 
 import com.github.pagehelper.PageInfo;
 import com.zlk.zlkproject.article.entity.Article;
+import com.zlk.zlkproject.article.entity.ArticleRefReport;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 〈功能概述〉<br>
@@ -23,14 +25,14 @@ public interface ArticleService {
      * @param programId  栏目id
      * @return 文章列表
      */
-    PageInfo<Article> pageArticle1(Integer pageIndex, Integer pageSize,Integer userId,Integer programId);
+    PageInfo<Article> pageArticle1(Integer pageIndex, Integer pageSize,Integer userId,Integer programId,Integer labelId);
     /**
-     * 根据栏目Id获取文章总数
+     * 根据栏目Id 或标签ID 或全部获取文章总数
      *
-     * @param
+     * @param map
      * @return 数量
      */
-    Integer countArticle(Integer programId);
+    Integer countArticle(Map map);
     /**
      * 文章详情页面显示
      *
@@ -51,5 +53,12 @@ public interface ArticleService {
      * @param article 文章
      */
     Integer updateArticle(Article article);
+    /**
+     * 添加对一篇文章的举报
+     *
+     * @param articleRefReport
+     * @return 数量
+     */
+    Integer insertArticleReport(ArticleRefReport articleRefReport);
 
 }
