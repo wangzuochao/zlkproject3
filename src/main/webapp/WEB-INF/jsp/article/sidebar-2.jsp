@@ -32,6 +32,7 @@
 <body>
 <div class="widget-sidebar-2 hot_comment">
 <div id="hot_comment_widget">
+<%--    热门文章--%>
     <ul>
 
         <c:forEach items="${hotArticleList}" var="m">

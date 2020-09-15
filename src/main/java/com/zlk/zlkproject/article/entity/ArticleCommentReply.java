@@ -29,4 +29,19 @@ public class ArticleCommentReply {
     private String stringDate;
     /**注入回复用户*/
     private User user;
+    /**未添加字段*/
+    private Integer articleId;
+
+    @Override
+    public String toString() {
+        return "ArticleCommentReply{" +
+                "comReplyId=" + comReplyId +
+                ", userId=" + userId +
+                ", commentId=" + commentId +
+                ", comReplyContent='" + comReplyContent + '\'' +
+                ", comReplyDate=" + comReplyDate +
+                ", stringDate='" + stringDate + '\'' +
+                ", user=" + user +
+                '}';
+    }
 }

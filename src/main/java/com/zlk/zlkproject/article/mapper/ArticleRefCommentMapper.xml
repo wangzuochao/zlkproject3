@@ -26,5 +26,64 @@
         article.article_id = #{articleId} and article.article_id = article_ref_comment.article_id and article_ref_comment.comment_id = article_comment.comment_id
         ORDER BY `article_comment`.`comment_date` DESC
     </select>
-
+<!--    插入文章评论表-->
+    <insert id="insertComment" parameterType="com.zlk.zlkproject.article.entity.ArticleComment" useGeneratedKeys="true" keyProperty="commentId">
+        insert into article_comment
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="commentId!=null">
+                comment_id,
+            </if>
+            <if test="userId!=null">
+                user_id,
+            </if>
+            <if test="articleId!=null">
+                article_id,
+            </if>
+            <if test="commentContent!=null">
+                comment_content,
+            </if>
+            <if test="commentDate!=null">
+                comment_date,
+            </if>
+        </trim>
+        values
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="commentId!=null">
+                #{commentId},
+            </if>
+            <if test="userId!=null">
+                #{userId},
+            </if>
+            <if test="articleId!=null">
+                #{articleId},
+            </if>
+            <if test="commentContent!=null">
+                #{commentContent},
+            </if>
+            <if test="commentDate!=null">
+                #{commentDate},
+            </if>
+        </trim>
+    </insert>
+<!--    插入评论关联表-->
+    <insert id="insertCommentRef" parameterType="com.zlk.zlkproject.article.entity.ArticleComment">
+        insert into article_ref_comment
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="commentId!=null">
+                comment_id,
+            </if>
+            <if test="articleId!=null">
+                article_id,
+            </if>
+        </trim>
+        values
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="commentId!=null">
+                #{commentId},
+            </if>
+            <if test="articleId!=null">
+                #{articleId},
+            </if>
+        </trim>
+    </insert>
 </mapper>

@@ -3384,7 +3384,7 @@ img.alignleft {
     background: #fff;
     margin: 0 0 10px 0;
     /*padding: 15px 20px;8*/
-    padding:15px 20px 30px 20px;
+    padding:15px 20px 10px 10px;
     border: 1px solid #ddd;
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
     border-radius: 2px;
@@ -3398,6 +3398,9 @@ img.alignleft {
 
 .comment-list .children li {
     list-style: none;
+    border: 0 solid #ddd;
+    margin: 0 0 1px 0;
+    padding: 5px 1px 0 30px;
 }
 
 .comment-list .children {
@@ -3730,11 +3733,12 @@ img.alignleft {
 }
 
 #respond #submit {
-    background: #fff;
+    background: cadetblue;
     width: 50%;
-    margin: 5px 0 15px 0;
+    margin: 5px 0 15px 160px;
     padding: 8px;
     cursor: pointer;
+    color: #fff;
     border: 1px solid #ddd;
     border-radius: 2px;
     -webkit-appearance: none;
